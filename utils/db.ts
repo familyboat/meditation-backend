@@ -4,14 +4,7 @@ const kv = new Map();
 
 export function insertNote(note: Note) {
   kv.set(["notes", index], note);
-  let deletedIndex = index - 5;
-  if (deletedIndex > 0) {
-    // deno-lint-ignore no-empty
-    while(kv.delete(['notes', deletedIndex--])) {
-    }
-  }
   index++;
-
   return index;
 }
 
