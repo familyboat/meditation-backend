@@ -35,7 +35,7 @@ router.get("/notes", async (ctx) => {
     uid,
     username,
   }
-  if (resp.ok) {
+  if (!resp.ok) {
     ctx.response.body = {
       error: 'insert fail',
       ...rest
