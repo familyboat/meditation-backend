@@ -11,7 +11,15 @@ router.get("/notes", async (ctx) => {
   const note = await ctx.request.body().value
   console.log(`recieved ${note} from ${ctx.request.ip}`)
   const index = await insertNote(note);
-  ctx.response.body = `note id is ${index}`
+  if (index === null) {
+    ctx.response.body = {
+      error: 'insert fail'
+    }
+  } else {
+    ctx.response.body = {
+      message: `note id is ${index}`
+    }
+  }
 })
 ;
 

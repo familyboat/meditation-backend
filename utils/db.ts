@@ -1,17 +1,22 @@
 import { Note } from "./types.ts";
 let index = 0;
-const kv = new Map();
+const kv = await Deno.openKv();
 
-export function insertNote(note: Note) {
-  kv.set(["notes", index], note);
-  index++;
-  return index;
+export async function insertNote(note: Note) {
+  const resp = await kv.set(["notes", index], note);
+  if (resp.ok) {
+    index++
+    return index
+  }
+  return null
 }
 
-export function listNotes() {
+export async function listNotes() {
   const notes: Note[] = [];
-  const iter = kv.values();
-  for (const value of iter) {
+  const iter = kv.list<Note>({
+    prefix: ['notes']
+  });
+  for await (const {value} of iter) {
     notes.push(value);
   }
   return notes;
