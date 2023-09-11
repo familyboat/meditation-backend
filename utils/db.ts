@@ -1,11 +1,10 @@
 import { Note } from "./types.ts";
-let index = 0;
 const kv = await Deno.openKv();
 
 export async function insertNote(note: Note) {
+  const index = crypto.randomUUID();
   const resp = await kv.set(["notes", index], note);
   if (resp.ok) {
-    index++
     return index
   }
   return null
