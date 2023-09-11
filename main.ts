@@ -7,7 +7,7 @@ router.get("/notes", async (ctx) => {
   const url = new URL(ctx.request.url);
   let uid = url.searchParams.get('uid');
   let username = url.searchParams.get('username');
-  if (uid === null) {
+  if (!uid) {
     uid = crypto.randomUUID();
     username = (Math.random()).toString(36).slice(2);
   }
@@ -24,7 +24,7 @@ router.get("/notes", async (ctx) => {
   const note : PostNote = await ctx.request.body().value
   console.log(`recieved ${note} from ${ctx.request.ip}`)
   let {uid, username} = note;
-  if (uid === undefined) {
+  if (!uid) {
     uid = crypto.randomUUID();
     username = (Math.random()).toString(36).slice(2);
     note.uid = uid;
