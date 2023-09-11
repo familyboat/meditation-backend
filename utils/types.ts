@@ -1,7 +1,7 @@
 export interface BaseNote {
   title: string,
   content: string,
-  created_at: Date,
+  created_at: string,
 }
 
 export interface PostNote extends BaseNote {

@@ -3,7 +3,7 @@ const kv = await Deno.openKv();
 
 export async function insertNote(note: Required<PostNote>) {
   const {uid, created_at, ...rest} = note;
-  return await kv.set(["notes", uid, created_at.toISOString()], {
+  return await kv.set(["notes", uid, created_at], {
     ...rest,
     created_at,
   });
