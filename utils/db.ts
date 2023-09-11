@@ -1,13 +1,12 @@
-import { Note } from "./types.ts";
+import { Note, PostNote } from "./types.ts";
 const kv = await Deno.openKv();
 
-export async function insertNote(note: Note) {
-  const index = crypto.randomUUID();
-  const resp = await kv.set(["notes", index], note);
-  if (resp.ok) {
-    return index
-  }
-  return null
+export async function insertNote(note: Required<PostNote>) {
+  const {uid, created_at, ...rest} = note;
+  return await kv.set(["notes", uid, created_at.toISOString()], {
+    ...rest,
+    created_at,
+  });
 }
 
 export async function listNotes() {
